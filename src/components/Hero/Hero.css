@@ -1,0 +1,282 @@
+/* Hero: navy/black atmosphere, glass badges, CTA glow and the 3D avatar stage. */
+
+.hero {
+  --hero-navy: #0b1226;
+  --hero-blue: 122 162 255;
+  --hero-purple: 167 139 250;
+  background: radial-gradient(120% 90% at 78% 18%, #101b38 0%, #0a1020 42%, var(--color-ink-950) 78%);
+}
+
+/* ---- Background ---- */
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.hero-bg__layer {
+  position: absolute;
+  inset: -40px;
+  will-change: transform;
+}
+
+.hero-bg__grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgb(255 255 255 / 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(255 255 255 / 0.035) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: radial-gradient(70% 60% at 70% 40%, #000 0%, transparent 75%);
+}
+
+.hero-bg__blob {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(110px);
+  animation: hero-drift 24s ease-in-out infinite alternate;
+}
+
+.hero-bg__blob--blue {
+  right: 4%;
+  top: 6%;
+  width: 520px;
+  height: 520px;
+  background: rgb(var(--hero-blue) / 0.16);
+}
+
+.hero-bg__blob--purple {
+  right: 26%;
+  top: 42%;
+  width: 420px;
+  height: 420px;
+  background: rgb(var(--hero-purple) / 0.12);
+  animation-delay: -8s;
+}
+
+.hero-bg__blob--navy {
+  left: -8%;
+  bottom: -10%;
+  width: 560px;
+  height: 560px;
+  background: rgb(40 70 160 / 0.14);
+  animation-delay: -16s;
+}
+
+.hero-bg__fade {
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  height: 9rem;
+  background: linear-gradient(to bottom, transparent, var(--color-ink-950));
+}
+
+@keyframes hero-drift {
+  from { transform: translate3d(0, 0, 0) scale(1); }
+  to { transform: translate3d(-30px, 24px, 0) scale(1.08); }
+}
+
+/* ---- Copy ---- */
+.hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: rgb(var(--hero-blue) / 0.9);
+}
+
+.hero-eyebrow__line {
+  width: 2rem;
+  height: 1px;
+  background: linear-gradient(90deg, rgb(var(--hero-blue) / 0.9), rgb(var(--hero-purple) / 0.4));
+}
+
+.hero-title {
+  margin-top: 1.25rem;
+  font-size: clamp(2.75rem, 6.4vw, 5.25rem);
+  font-weight: 600;
+  line-height: 0.98;
+  letter-spacing: -0.04em;
+  color: var(--color-fg);
+}
+
+.hero-title__role {
+  display: block;
+  margin-top: 0.35em;
+  font-size: 0.56em;
+  letter-spacing: -0.03em;
+  background: linear-gradient(100deg, #dfe6ff 0%, rgb(var(--hero-blue)) 45%, rgb(var(--hero-purple)) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* ---- Technology badges (glass) ---- */
+.tech-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.45rem 0.85rem;
+  border-radius: 9999px;
+  font-size: 13px;
+  color: var(--color-fg);
+  background: rgb(255 255 255 / 0.04);
+  border: 1px solid rgb(255 255 255 / 0.09);
+  backdrop-filter: blur(12px) saturate(140%);
+  -webkit-backdrop-filter: blur(12px) saturate(140%);
+  box-shadow: 0 1px 0 0 rgb(255 255 255 / 0.05) inset;
+  transition: border-color 0.25s ease, background-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.tech-badge:hover {
+  border-color: rgb(var(--hero-blue) / 0.35);
+  background: rgb(255 255 255 / 0.07);
+  box-shadow: 0 8px 24px -14px rgb(var(--hero-blue) / 0.6);
+}
+
+/* ---- CTA lift + soft glow ---- */
+.cta-lift {
+  position: relative;
+  border-radius: 0.75rem;
+}
+
+.cta-lift::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.cta-lift--blue::after { box-shadow: 0 14px 34px -10px rgb(var(--hero-blue) / 0.55); }
+.cta-lift--purple::after { box-shadow: 0 14px 34px -12px rgb(var(--hero-purple) / 0.45); }
+.cta-lift:hover::after,
+.cta-lift:focus-within::after { opacity: 1; }
+
+/* ---- Avatar column ---- */
+.hero-avatar {
+  position: relative;
+  width: min(82%, 440px); /* mobile: 70–85% of the width */
+  margin-inline: auto;
+}
+
+@media (min-width: 640px) and (max-width: 1023px) {
+  .hero-avatar { width: min(66%, 520px); margin-top: 1rem; } /* tablet: centred, below the copy */
+}
+
+@media (min-width: 1024px) {
+  .hero-avatar { width: 100%; }
+}
+
+/* ---- Portrait ---- */
+.hero-portrait {
+  position: relative;
+  width: 100%;
+  max-width: 480px;
+  margin-inline: auto;
+  aspect-ratio: 1 / 1.08;
+}
+
+.hero-portrait__glow {
+  position: absolute;
+  inset: 8% 6% 0;
+  border-radius: 9999px;
+  background: radial-gradient(circle at 50% 55%, rgb(var(--hero-blue) / 0.28), rgb(var(--hero-purple) / 0.14) 45%, transparent 70%);
+  filter: blur(40px);
+}
+
+/* Circular backdrop the cut-out stands in front of, with a slowly turning gradient ring. */
+.hero-portrait__disc {
+  position: absolute;
+  left: 50%;
+  bottom: 4%;
+  width: 84%;
+  aspect-ratio: 1;
+  transform: translateX(-50%);
+  border-radius: 9999px;
+  background:
+    radial-gradient(circle at 50% 30%, rgb(var(--hero-blue) / 0.22), transparent 60%),
+    linear-gradient(180deg, #16224a 0%, #0d1430 60%, #0a0f22 100%);
+  box-shadow: 0 0 0 1px rgb(255 255 255 / 0.06) inset, 0 40px 90px -40px rgb(var(--hero-blue) / 0.6);
+}
+
+.hero-portrait__ring {
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1.5px;
+  background: conic-gradient(from 0deg, transparent 0 15%, rgb(var(--hero-blue) / 0.9) 30%, rgb(var(--hero-purple) / 0.8) 45%, transparent 60% 100%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  animation: portrait-spin 14s linear infinite;
+}
+
+@keyframes portrait-spin {
+  to { transform: rotate(360deg); }
+}
+
+.hero-portrait__img {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  z-index: 10;
+  width: 92%;
+  height: auto;
+  translate: -50% 0;
+  filter: drop-shadow(0 24px 40px rgb(0 0 0 / 0.45));
+  /* Fade the torso into the page instead of a hard crop. */
+  mask-image: linear-gradient(to bottom, #000 78%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, #000 78%, transparent 100%);
+  user-select: none;
+  pointer-events: none;
+  border-radius: 50%;
+}
+
+/* ---- Floating badges ---- */
+.portrait-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.55rem 0.85rem;
+  border-radius: 9999px;
+  white-space: nowrap;
+  background: rgb(16 22 42 / 0.6);
+  border: 1px solid rgb(255 255 255 / 0.1);
+  backdrop-filter: blur(14px) saturate(150%);
+  -webkit-backdrop-filter: blur(14px) saturate(150%);
+  box-shadow: 0 1px 0 0 rgb(255 255 255 / 0.06) inset, 0 16px 36px -18px rgb(0 0 0 / 0.8);
+}
+
+.portrait-badge--stat {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.1rem;
+  padding: 0.65rem 0.95rem;
+  border-radius: 1rem;
+}
+
+.portrait-bubble {
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 9999px;
+  background: rgb(16 22 42 / 0.6);
+  border: 1px solid rgb(255 255 255 / 0.1);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow: 0 12px 28px -14px rgb(var(--hero-blue) / 0.7);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-bg__blob,
+  .hero-portrait__ring { animation: none; }
+}
